@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charles's Geography Quiz</title>
+    <title>🗺️ Endless Geography Trivia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -27,7 +27,8 @@
                     <i class="fas fa-map-location-dot text-slate-900 text-lg"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-black tracking-tight text-slate-900 uppercase">Charles's Geography Quiz</h1>
+                    <h1 class="text-base font-black tracking-tight text-slate-900 uppercase">Charles's Geeks Who Drink</h1>
+                    <p class="text-[10px] font-bold text-amber-900 uppercase tracking-widest">Geography Edition</p>
                 </div>
             </div>
             <div class="flex items-center space-x-2 bg-slate-900/5 px-3 py-1.5 rounded-xl border border-[#EFE9B0]">
@@ -49,7 +50,7 @@
                         <svg id="geo-map-svg" class="w-full h-full"></svg>
                     </div>
                     <button id="hint-toggle-btn" class="text-[11px] font-black uppercase text-amber-700 tracking-wider hover:underline flex items-center gap-1">
-                        <i class="fas fa-eye text-[10px]"></i> Reveal Options Deck (-50% streak penalty)
+                        <i class="fas fa-eye text-[10px]"></i> Reveal Multiple Choice (-50% streak penalty)
                     </button>
                     <div id="choices-container" class="hidden grid grid-cols-2 gap-2 w-full pt-2"></div>
                 </div>
@@ -77,7 +78,6 @@
     </main>
 
     <script>
-        // Expanded list to top 150+ most globally recognized countries/territories
         const quizTargetsList = [
             "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas",
             "Bangladesh", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil",
