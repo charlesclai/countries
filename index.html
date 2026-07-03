@@ -250,19 +250,26 @@
             
             const correctName = currentCountryFeature.properties.name;
             const continent = getContinent(correctName);
+            
+            // Filters the pool to only include countries on the same continent
             let sameContinentPool = quizCountryPool.filter(d => 
                 getContinent(d.properties.name) === continent && 
                 d.properties.name !== correctName
             );
 
             let list = [correctName];
+            // Randomly picks 3 other countries from the filtered same-continent pool
             while (list.length < 4 && sameContinentPool.length > 0) {
                 let randomIndex = Math.floor(Math.random() * sameContinentPool.length);
                 let item = sameContinentPool.splice(randomIndex, 1)[0];
-                if (!list.includes(item.properties.name)) list.push(item.properties.name);
+                if (!list.includes(item.properties.name)) {
+                    list.push(item.properties.name);
+                }
             }
             
+            // Shuffle the final list to randomize the position of the correct answer
             list.sort(() => Math.random() - 0.5);
+            
             choicesContainer.innerHTML = "";
             list.forEach(item => {
                 const button = document.createElement("button");
