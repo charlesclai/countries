@@ -82,19 +82,20 @@
             "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas",
             "Bangladesh", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", 
             "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Central African Republic", "Chad", "Chile",
-            "Colombia", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominican Republic",
-            "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Finland",
-            "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Guinea", "Guyana", "Haiti",
-            "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan",
-            "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
-            "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Mali", "Mauritania", "Mexico", "Moldova", "Mongolia",
-            "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
-            "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru",
-            "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Rwanda", "Saudi Arabia", "Senegal", "Serbia", "Sierra Leone",
-            "Singapore", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan",
-            "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Trinidad and Tobago",
-            "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
-            "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe", "Alaska", "Hawaii", "French Guiana"
+            "Colombia", "Congo", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo",
+            "Denmark", "Djibouti", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia",
+            "Eswatini", "Ethiopia", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Guatemala",
+            "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
+            "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon",
+            "Lesotho", "Liberia", "Libya", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Mali", "Mauritania",
+            "Mexico", "Moldova", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nepal", "Netherlands",
+            "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Panama",
+            "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Rwanda", "Saudi Arabia",
+            "Senegal", "Serbia", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea",
+            "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+            "Tanzania", "Thailand", "Togo", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine",
+            "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen",
+            "Zambia", "Zimbabwe", "Alaska", "Hawaii", "French Guiana"
         ];
 
         let geoWorldData = [];          
@@ -205,26 +206,10 @@
             const b = pathGenerator.bounds(currentCountryFeature);
             
             const zoomOverrides = {
-                "Argentina": 0.5,
-                "Finland": 0.9,
-                "Sweden": 0.9,
-                "Israel": 1.5,
-                "Norway": 0.9,
-                "South Africa": 0.4,
-                "Peru": 0.5,
-                "Vietnam": 0.6,
-                "Thailand": 0.6,
-                "Mexico": 0.3,
-                "Australia": 0.2,
-                "Kazakhstan": 0.5,
-                "Japan": 0.4,
-                "United Kingdom": 0.5,
-                "Italy": 0.9,
-                "India": 0.7,
-                "Iran": 0.5,
-                "Saudi Arabia": 0.7,
-                "Myanmar": 0.6,
-                "Algeria": 0.4
+                "Argentina": 0.5, "Finland": 0.9, "Sweden": 0.9, "Israel": 1.5, "Norway": 0.9,
+                "South Africa": 0.4, "Peru": 0.5, "Vietnam": 0.6, "Thailand": 0.6, "Mexico": 0.3,
+                "Australia": 0.2, "Kazakhstan": 0.5, "Japan": 0.4, "United Kingdom": 0.5, "Italy": 0.9,
+                "India": 0.7, "Iran": 0.5, "Saudi Arabia": 0.7, "Myanmar": 0.6, "Algeria": 0.4
             };
             
             const name = currentCountryFeature.properties.name;
@@ -249,7 +234,17 @@
             const userAns = inputCountry.value.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
             const correctName = currentCountryFeature.properties.name;
             const targetAns = correctName.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
-            const isCorrect = userAns === targetAns;
+            
+            const aliases = {
+                "cotedivoire": ["cotedivoire", "ivorycoast"],
+                "democraticrepublicofthecongo": ["democraticrepublicofthecongo", "drcongo", "drc"]
+            };
+
+            let isCorrect = (userAns === targetAns);
+            if (aliases[targetAns] && aliases[targetAns].includes(userAns)) {
+                isCorrect = true;
+            }
+
             currentStreak = isCorrect ? (hintPenaltyTriggered ? Math.floor(currentStreak / 2) + 1 : currentStreak + 1) : 0;
             streakCounter.innerText = `STREAK: ${currentStreak}`;
             feedbackDrawer.innerHTML = `<div class="py-2.5 px-4 rounded-xl font-bold inline-block mx-auto text-sm ${isCorrect ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-rose-100 text-rose-900 border border-rose-300'}">${correctName}</div>`;
