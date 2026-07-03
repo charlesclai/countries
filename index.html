@@ -44,7 +44,7 @@
                     <div class="w-full h-72 bg-sky-100 rounded-xl relative border border-[#EFE9B0] flex items-center justify-center overflow-hidden shadow-inner">
                         <div id="map-loading" class="absolute inset-0 flex flex-col items-center justify-center bg-[#FFFDEB]/80 z-10 transition-opacity duration-300">
                             <i class="fas fa-spinner fa-spin text-amber-600 text-2xl mb-2"></i>
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Normalizing Global Continents...</span>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Normalizing Global Data...</span>
                         </div>
                         <svg id="geo-map-svg" class="w-full h-full"></svg>
                     </div>
@@ -77,17 +77,24 @@
     </main>
 
     <script>
+        // Expanded list to top 150+ most globally recognized countries/territories
         const quizTargetsList = [
-            "United States", "Canada", "Mexico", "Brazil", "Argentina", "United Kingdom", "France", "Germany", 
-            "Italy", "Spain", "Russia", "China", "India", "Japan", "Australia", "South Africa", "Egypt", "Nigeria", 
-            "Saudi Arabia", "South Korea", "Indonesia", "Turkey", "Iran", "Pakistan", "Colombia", "Peru", "Chile", 
-            "Venezuela", "New Zealand", "Ukraine", "Poland", "Sweden", "Norway", "Finland", "Greece", "Portugal", 
-            "Netherlands", "Belgium", "Switzerland", "Austria", "Thailand", "Vietnam", "Philippines", "Malaysia", 
-            "Singapore", "Israel", "Iraq", "Ireland", "Cuba", "Greenland", "Iceland", "Kenya", "Ethiopia", "Ghana", 
-            "Morocco", "Algeria", "Libya", "Sudan", "Madagascar", "Afghanistan", "Bangladesh", "Sri Lanka", 
-            "Kazakhstan", "Mongolia", "Nepal", "North Korea", "Taiwan", "Cambodia", "Myanmar", "Syria", "Jordan", 
-            "United Arab Emirates", "Denmark", "Czech Republic", "Hungary", "Romania", "Bolivia", "Ecuador",
-            "French Guiana", "Puerto Rico", "Alaska", "Hawaii"
+            "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas",
+            "Bangladesh", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil",
+            "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China",
+            "Colombia", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominican Republic",
+            "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland",
+            "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Guinea", "Guyana", "Haiti",
+            "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan",
+            "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
+            "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Mali", "Mauritania", "Mexico", "Moldova", "Mongolia",
+            "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
+            "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru",
+            "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saudi Arabia", "Senegal", "Serbia", "Sierra Leone",
+            "Singapore", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan",
+            "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Trinidad and Tobago",
+            "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
+            "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe", "Alaska", "Hawaii", "French Guiana"
         ];
 
         let geoWorldData = [];          
@@ -138,8 +145,6 @@
                             standaloneFeature.properties.name = "Alaska";
                         } else if (feature.properties.name === "United States" && lon < -154 && lat < 30) {
                             standaloneFeature.properties.name = "Hawaii";
-                        } else if (feature.properties.name === "United States" && lon > -67 && lon < -65 && lat > 17 && lat < 19) {
-                            standaloneFeature.properties.name = "Puerto Rico";
                         }
 
                         let area = d3.geoArea(standaloneFeature);
@@ -170,8 +175,6 @@
             loader.style.opacity = 0;
             setTimeout(() => loader.remove(), 300);
             loadNextMapTarget();
-        }).catch(err => {
-            console.error(err);
         });
 
         function loadNextMapTarget() {
@@ -197,73 +200,38 @@
 
         function getContinentalCentroidAndScale(feature) {
             const centroid = d3.geoCentroid(feature);
-            const lon = centroid[0];
-            const lat = centroid[1];
-            
-            if (lon < -30 && lon > -170 && lat > 12) {
-                return { center: [-95, 40], scale: 110 };
-            }
-            if (lon < -30 && lon > -90 && lat <= 12) {
-                return { center: [-60, -20], scale: 120 };
-            }
+            const lon = centroid[0], lat = centroid[1];
+            if (lon < -30 && lon > -170 && lat > 12) return { center: [-95, 40], scale: 110 };
+            if (lon < -30 && lon > -90 && lat <= 12) return { center: [-60, -20], scale: 120 };
             if (lon > -30 && lon < 190 && lat > 35) {
-                if (feature.properties.name === "Russia" || lon > 40) {
-                    return { center: [90, 56], scale: 75 };
-                }
+                if (feature.properties.name === "Russia" || lon > 40) return { center: [90, 56], scale: 75 };
                 return { center: [15, 50], scale: 240 };
             }
-            if (lon > -20 && lon < 55 && lat > -35 && lat <= 35) {
-                return { center: [18, 2], scale: 130 };
-            }
-            if (lon >= 55 && lon < 145 && lat > 5 && lat <= 55) {
-                return { center: [95, 30], scale: 130 };
-            }
+            if (lon > -20 && lon < 55 && lat > -35 && lat <= 35) return { center: [18, 2], scale: 130 };
+            if (lon >= 55 && lon < 145 && lat > 5 && lat <= 55) return { center: [95, 30], scale: 130 };
             return { center: [135, -20], scale: 150 };
         }
 
         function renderVisualProjection() {
             svg.selectAll("*").remove();
-
             const viewConfig = getContinentalCentroidAndScale(currentCountryFeature);
             projection.center(viewConfig.center).scale(viewConfig.scale).translate([width / 2, height / 2]);
-
-            svg.append("g")
-               .selectAll("path")
-               .data(geoWorldData)
-               .enter()
-               .append("path")
+            svg.append("g").selectAll("path").data(geoWorldData).enter().append("path")
                .attr("d", pathGenerator)
-               .attr("class", d => d.properties.name === currentCountryFeature.properties.name 
-                    ? "country-feature country-target" 
-                    : "country-feature"
-               );
+               .attr("class", d => d.properties.name === currentCountryFeature.properties.name ? "country-feature country-target" : "country-feature");
         }
 
-        function sanitize(str) { return str ? str.toLowerCase().replace(/[^a-z0-9]/g, "").trim() : ""; }
-
         function evaluateResponse() {
-            const userAns = sanitize(inputCountry.value);
+            const userAns = inputCountry.value.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
             const correctName = currentCountryFeature.properties.name;
-            const targetAns = sanitize(correctName);
+            const targetAns = correctName.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
             const isCorrect = userAns === targetAns;
-
             currentStreak = isCorrect ? (hintPenaltyTriggered ? Math.floor(currentStreak / 2) + 1 : currentStreak + 1) : 0;
             streakCounter.innerText = `STREAK: ${currentStreak}`;
-
-            feedbackDrawer.innerHTML = `
-                <div class="py-2.5 px-4 rounded-xl font-bold inline-block mx-auto text-sm ${
-                    isCorrect 
-                    ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' 
-                    : 'bg-rose-100 text-rose-900 border border-rose-300'
-                }">
-                    ${correctName}
-                </div>`;
+            feedbackDrawer.innerHTML = `<div class="py-2.5 px-4 rounded-xl font-bold inline-block mx-auto text-sm ${isCorrect ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-rose-100 text-rose-900 border border-rose-300'}">${correctName}</div>`;
             feedbackDrawer.classList.remove('hidden');
-
-            inputCountry.disabled = true;
-            hintToggleBtn.classList.add('hidden');
-            choicesContainer.classList.add('hidden');
-            submitBtn.classList.add('hidden');
+            inputCountry.disabled = true; hintToggleBtn.classList.add('hidden');
+            choicesContainer.classList.add('hidden'); submitBtn.classList.add('hidden');
             nextBtn.classList.remove('hidden');
         }
 
@@ -271,18 +239,14 @@
             hintPenaltyTriggered = true;
             hintToggleBtn.classList.add('hidden');
             choicesContainer.classList.remove('hidden');
-
             let list = [currentCountryFeature.properties.name];
             let altPool = quizCountryPool.filter(d => d.properties.name !== currentCountryFeature.properties.name);
-            
             while (list.length < 4) {
                 let rngName = altPool[Math.floor(Math.random() * altPool.length)].properties.name;
                 if (!list.includes(rngName)) list.push(rngName);
             }
-
             list.sort(() => Math.random() - 0.5);
             choicesContainer.innerHTML = "";
-
             list.forEach(item => {
                 const button = document.createElement("button");
                 button.className = "p-2.5 text-xs font-bold text-slate-800 bg-white border border-[#EFE9B0] rounded-xl hover:bg-[#F8E665]/30 transition text-left truncate";
