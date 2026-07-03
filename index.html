@@ -27,7 +27,7 @@
                     <i class="fas fa-map-location-dot text-slate-900 text-lg"></i>
                 </div>
                 <div>
-                    <h1 class="text-base font-black tracking-tight text-slate-900 uppercase">Charles's Geeks Who Drink</h1>
+                    <h1 class="text-base font-black tracking-tight text-slate-900 uppercase">Charles's GWD</h1>
                     <p class="text-[10px] font-bold text-amber-900 uppercase tracking-widest">Geography Edition</p>
                 </div>
             </div>
@@ -95,8 +95,29 @@
             "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
             "Tanzania", "Thailand", "Togo", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine",
             "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen",
-            "Zambia", "Zimbabwe", "Alaska", "Hawaii", "French Guiana"
+            "Zambia", "Zimbabwe"
         ];
+
+        // Mapping for Flag Emojis
+        const flagMap = {
+            "Afghanistan": "🇦🇫", "Albania": "🇦🇱", "Algeria": "🇩🇿", "Angola": "🇦🇴", "Argentina": "🇦🇷", "Armenia": "🇦🇲", "Australia": "🇦🇺", "Austria": "🇦🇹", "Azerbaijan": "🇦🇿", "Bahamas": "🇧🇸",
+            "Bangladesh": "🇧🇩", "Belarus": "🇧🇾", "Belgium": "🇧🇪", "Belize": "🇧🇿", "Benin": "🇧🇯", "Bhutan": "🇧🇹", "Bolivia": "🇧🇴", "Bosnia and Herzegovina": "🇧🇦", "Botswana": "🇧🇼", 
+            "Bulgaria": "🇧🇬", "Burkina Faso": "🇧🇫", "Burundi": "🇧🇮", "Cambodia": "🇰🇭", "Cameroon": "🇨🇲", "Central African Republic": "🇨🇫", "Chad": "🇹🇩", "Chile": "🇨🇱",
+            "Colombia": "🇨🇴", "Congo": "🇨🇬", "Costa Rica": "🇨🇷", "Cote d'Ivoire": "🇨🇮", "Croatia": "🇭🇷", "Cuba": "🇨🇺", "Cyprus": "🇨🇾", "Czech Republic": "🇨🇿", "Democratic Republic of the Congo": "🇨🇩",
+            "Denmark": "🇩🇰", "Djibouti": "🇩🇯", "Dominican Republic": "🇩🇴", "Ecuador": "🇪🇨", "Egypt": "🇪🇬", "El Salvador": "🇸🇻", "Equatorial Guinea": "🇬🇶", "Eritrea": "🇪🇷", "Estonia": "🇪🇪",
+            "Eswatini": "🇸🇿", "Ethiopia": "🇪🇹", "Finland": "🇫🇮", "France": "🇫🇷", "Gabon": "🇬🇦", "Gambia": "🇬🇲", "Georgia": "🇬🇪", "Germany": "🇩🇪", "Ghana": "🇬🇭", "Greece": "🇬🇷", "Guatemala": "🇬🇹",
+            "Guinea": "🇬🇳", "Guyana": "🇬🇾", "Haiti": "🇭🇹", "Honduras": "🇭🇳", "Hungary": "🇭🇺", "Iceland": "🇮🇸", "India": "🇮🇳", "Indonesia": "🇮🇩", "Iran": "🇮🇷", "Iraq": "🇮🇶", "Ireland": "🇮🇪", "Israel": "🇮🇱",
+            "Italy": "🇮🇹", "Jamaica": "🇯🇲", "Japan": "🇯🇵", "Jordan": "🇯🇴", "Kazakhstan": "🇰🇿", "Kenya": "🇰🇪", "Kuwait": "🇰🇼", "Kyrgyzstan": "🇰🇬", "Laos": "🇱🇦", "Latvia": "🇱🇻", "Lebanon": "🇱🇧",
+            "Lesotho": "🇱🇸", "Liberia": "🇱🇷", "Libya": "🇱🇾", "Lithuania": "🇱🇹", "Luxembourg": "🇱🇺", "Madagascar": "🇲🇬", "Malawi": "🇲🇼", "Malaysia": "🇲🇾", "Mali": "🇲🇱", "Mauritania": "🇲🇷",
+            "Mexico": "🇲🇽", "Moldova": "🇲🇩", "Mongolia": "🇲🇳", "Montenegro": "🇲🇪", "Morocco": "🇲🇦", "Mozambique": "🇲🇿", "Myanmar": "🇲🇲", "Namibia": "🇳🇦", "Nepal": "🇳🇵", "Netherlands": "🇳🇱",
+            "New Zealand": "🇳🇿", "Nicaragua": "🇳🇮", "Niger": "🇳🇪", "Nigeria": "🇳🇬", "North Korea": "🇰🇵", "North Macedonia": "🇲🇰", "Norway": "🇳🇴", "Oman": "🇴🇲", "Pakistan": "🇵🇰", "Panama": "🇵🇦",
+            "Papua New Guinea": "🇵🇬", "Paraguay": "🇵🇾", "Peru": "🇵🇪", "Philippines": "🇵🇭", "Poland": "🇵🇱", "Portugal": "🇵🇹", "Qatar": "🇶🇦", "Romania": "🇷🇴", "Rwanda": "🇷🇼", "Saudi Arabia": "🇸🇦",
+            "Senegal": "🇸🇳", "Serbia": "🇷🇸", "Sierra Leone": "🇸🇱", "Singapore": "🇸🇬", "Slovakia": "🇸🇰", "Slovenia": "🇸🇮", "Somalia": "🇸🇴", "South Africa": "🇿🇦", "South Korea": "🇰🇷",
+            "South Sudan": "🇸🇸", "Spain": "🇪🇸", "Sri Lanka": "🇱🇰", "Sudan": "🇸🇩", "Suriname": "🇸🇷", "Sweden": "🇸🇪", "Switzerland": "🇨🇭", "Syria": "🇸🇾", "Taiwan": "🇹🇼", "Tajikistan": "🇹🇯",
+            "Tanzania": "🇹🇿", "Thailand": "🇹🇭", "Togo": "🇹🇬", "Trinidad and Tobago": "🇹🇹", "Tunisia": "🇹🇳", "Turkey": "🇹🇷", "Turkmenistan": "🇹🇲", "Uganda": "🇺🇬", "Ukraine": "🇺🇦", "United Arab Emirates": "🇦🇪",
+            "United Kingdom": "🇬🇧", "United States": "🇺🇸", "Uruguay": "🇺🇾", "Uzbekistan": "🇺🇿", "Venezuela": "🇻🇪", "Vietnam": "🇻🇳", "Yemen": "🇾🇪",
+            "Zambia": "🇿🇲", "Zimbabwe": "🇿🇼"
+        };
 
         let geoWorldData = [];          
         let quizCountryPool = [];       
@@ -127,44 +148,12 @@
             let maxAreaRegistry = {};
 
             baseFeatures.forEach(feature => {
-                if (feature.geometry.type === "MultiPolygon") {
-                    feature.geometry.coordinates.forEach((polygonCoords) => {
-                        uniqueIdCounter++;
-                        let standaloneFeature = {
-                            type: "Feature",
-                            id: `split_geo_${uniqueIdCounter}`,
-                            properties: { ...feature.properties },
-                            geometry: { type: "Polygon", coordinates: polygonCoords }
-                        };
-
-                        let center = d3.geoCentroid(standaloneFeature);
-                        let lon = center[0], lat = center[1];
-
-                        if (feature.properties.name === "France" && lon < -50 && lat < 10) {
-                            standaloneFeature.properties.name = "French Guiana";
-                        } else if (feature.properties.name === "United States" && lon < -140 && lat > 50) {
-                            standaloneFeature.properties.name = "Alaska";
-                        } else if (feature.properties.name === "United States" && lon < -154 && lat < 30) {
-                            standaloneFeature.properties.name = "Hawaii";
-                        }
-
-                        let area = d3.geoArea(standaloneFeature);
-                        standaloneFeature.calculatedArea = area;
-                        processedFeatures.push(standaloneFeature);
-
-                        let name = standaloneFeature.properties.name;
-                        if (!maxAreaRegistry[name] || area > maxAreaRegistry[name]) {
-                            maxAreaRegistry[name] = area;
-                        }
-                    });
-                } else {
-                    uniqueIdCounter++;
-                    feature.id = `split_geo_${uniqueIdCounter}`;
-                    let area = d3.geoArea(feature);
-                    feature.calculatedArea = area;
-                    processedFeatures.push(feature);
-                    maxAreaRegistry[feature.properties.name] = area;
-                }
+                uniqueIdCounter++;
+                feature.id = `split_geo_${uniqueIdCounter}`;
+                let area = d3.geoArea(feature);
+                feature.calculatedArea = area;
+                processedFeatures.push(feature);
+                maxAreaRegistry[feature.properties.name] = area;
             });
 
             geoWorldData = processedFeatures;
@@ -204,22 +193,13 @@
 
             projection.scale(1).translate([0, 0]);
             const b = pathGenerator.bounds(currentCountryFeature);
-            
-            const zoomOverrides = {
-                "Chile": 0.5, "Argentina": 0.5, "Finland": 0.9, "Sweden": 0.9, "Norway": 0.9,
-                "Italy": 0.6, "Israel": 0.9, "Kazakhstan": 0.3, "South Africa": 0.4, "Peru": 0.4, 
-                "Vietnam": 0.6, "Thailand": 0.6, "Mexico": 0.3, "Australia": 0.2, "Japan": 0.4, 
-                "United Kingdom": 0.5, "India": 0.7, "Iran": 0.5, "Saudi Arabia": 0.7, "Myanmar": 0.6, "Algeria": 0.4
-            };
-            
             const name = currentCountryFeature.properties.name;
+            
+            const zoomOverrides = { "Chile": 0.5, "Argentina": 0.5, "France": 0.4, "United Kingdom": 0.5, "India": 0.7, "Japan": 0.4 };
             const customScale = zoomOverrides[name] || 0.06;
             
             const s = customScale / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
-            const t = [
-                (width - s * (b[1][0] + b[0][0])) / 2,
-                (height - s * (b[1][1] + b[0][1])) / 2
-            ];
+            const t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
             projection.scale(s).translate(t);
 
@@ -235,19 +215,12 @@
             const correctName = currentCountryFeature.properties.name;
             const targetAns = correctName.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
             
-            const aliases = {
-                "cotedivoire": ["cotedivoire", "ivorycoast"],
-                "democraticrepublicofthecongo": ["democraticrepublicofthecongo", "drcongo", "drc"]
-            };
-
             let isCorrect = (userAns === targetAns);
-            if (aliases[targetAns] && aliases[targetAns].includes(userAns)) {
-                isCorrect = true;
-            }
-
             currentStreak = isCorrect ? (hintPenaltyTriggered ? Math.floor(currentStreak / 2) + 1 : currentStreak + 1) : 0;
             streakCounter.innerText = `STREAK: ${currentStreak}`;
-            feedbackDrawer.innerHTML = `<div class="py-2.5 px-4 rounded-xl font-bold inline-block mx-auto text-sm ${isCorrect ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-rose-100 text-rose-900 border border-rose-300'}">${correctName}</div>`;
+            
+            const flag = flagMap[correctName] || "📍";
+            feedbackDrawer.innerHTML = `<div class="py-2.5 px-4 rounded-xl font-bold inline-block mx-auto text-sm ${isCorrect ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-rose-100 text-rose-900 border border-rose-300'}">${flag} ${correctName}</div>`;
             feedbackDrawer.classList.remove('hidden');
             inputCountry.disabled = true; hintToggleBtn.classList.add('hidden');
             choicesContainer.classList.add('hidden'); 
