@@ -198,25 +198,25 @@
             renderVisualProjection();
         }
 
-        function getContinentalCentroidAndScale(feature) {
-            const centroid = d3.geoCentroid(feature);
-            const lon = centroid[0], lat = centroid[1];
-            if (lon < -30 && lon > -170 && lat > 12) return { center: [-95, 40], scale: 110 };
-            if (lon < -30 && lon > -90 && lat <= 12) return { center: [-60, -20], scale: 120 };
-            if (lon > -30 && lon < 190 && lat > 35) {
-                if (feature.properties.name === "Russia" || lon > 40) return { center: [90, 56], scale: 75 };
-                return { center: [15, 50], scale: 240 };
-            }
-            if (lon > -20 && lon < 55 && lat > -35 && lat <= 35) return { center: [18, 2], scale: 130 };
-            if (lon >= 55 && lon < 145 && lat > 5 && lat <= 55) return { center: [95, 30], scale: 130 };
-            return { center: [135, -20], scale: 150 };
-        }
-
         function renderVisualProjection() {
             svg.selectAll("*").remove();
-            const viewConfig = getContinentalCentroidAndScale(currentCountryFeature);
-            projection.center(viewConfig.center).scale(viewConfig.scale).translate([width / 2, height / 2]);
-            svg.append("g").selectAll("path").data(geoWorldData).enter().append("path")
+
+            projection.scale(1).translate([0, 0]);
+            const b = pathGenerator.bounds(currentCountryFeature);
+            
+            // Adjusted scaleFactor to 0.06 to zoom out significantly
+            const scaleFactor = 0.06; 
+            const s = scaleFactor / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
+            const t = [
+                (width - s * (b[1][0] + b[0][0])) / 2,
+                (height - s * (b[1][1] + b[0][1])) / 2
+            ];
+
+            projection.scale(s).translate(t);
+
+            svg.append("g").selectAll("path")
+               .data(geoWorldData)
+               .enter().append("path")
                .attr("d", pathGenerator)
                .attr("class", d => d.properties.name === currentCountryFeature.properties.name ? "country-feature country-target" : "country-feature");
         }
