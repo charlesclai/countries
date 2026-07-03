@@ -98,7 +98,15 @@
             "Zambia", "Zimbabwe"
         ];
 
-        // Mapping for Flag Emojis
+        const continentMap = {
+            "Europe": ["Albania", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Georgia", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Moldova", "Montenegro", "Netherlands", "North Macedonia", "Norway", "Poland", "Portugal", "Romania", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom"],
+            "Asia": ["Afghanistan", "Armenia", "Azerbaijan", "Bangladesh", "Bhutan", "Cambodia", "India", "Indonesia", "Iran", "Iraq", "Israel", "Japan", "Jordan", "Kazakhstan", "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Malaysia", "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "South Korea", "Sri Lanka", "Syria", "Taiwan", "Tajikistan", "Thailand", "Turkey", "Turkmenistan", "United Arab Emirates", "Uzbekistan", "Vietnam", "Yemen"],
+            "Africa": ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Central African Republic", "Chad", "Congo", "Cote d'Ivoire", "Democratic Republic of the Congo", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Senegal", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"],
+            "North America": ["Bahamas", "Belize", "Costa Rica", "Cuba", "Dominican Republic", "El Salvador", "Guatemala", "Haiti", "Honduras", "Jamaica", "Mexico", "Nicaragua", "Panama", "Trinidad and Tobago", "United States"],
+            "South America": ["Argentina", "Bolivia", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"],
+            "Oceania": ["Australia", "New Zealand", "Papua New Guinea"]
+        };
+
         const flagMap = {
             "Afghanistan": "🇦🇫", "Albania": "🇦🇱", "Algeria": "🇩🇿", "Angola": "🇦🇴", "Argentina": "🇦🇷", "Armenia": "🇦🇲", "Australia": "🇦🇺", "Austria": "🇦🇹", "Azerbaijan": "🇦🇿", "Bahamas": "🇧🇸",
             "Bangladesh": "🇧🇩", "Belarus": "🇧🇾", "Belgium": "🇧🇪", "Belize": "🇧🇿", "Benin": "🇧🇯", "Bhutan": "🇧🇹", "Bolivia": "🇧🇴", "Bosnia and Herzegovina": "🇧🇦", "Botswana": "🇧🇼", 
@@ -140,6 +148,10 @@
         const height = 288;
         const projection = d3.geoMercator();
         const pathGenerator = d3.geoPath().projection(projection);
+
+        function getContinent(countryName) {
+            return Object.keys(continentMap).find(continent => continentMap[continent].includes(countryName)) || "Other";
+        }
 
         d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(topology => {
             let baseFeatures = topojson.feature(topology, topology.objects.countries).features;
@@ -195,7 +207,10 @@
             const b = pathGenerator.bounds(currentCountryFeature);
             const name = currentCountryFeature.properties.name;
             
-            const zoomOverrides = { "Chile": 0.5, "Argentina": 0.5, "France": 0.4, "United Kingdom": 0.5, "India": 0.7, "Japan": 0.4 };
+            const zoomOverrides = { 
+                "Chile": 0.5, "Argentina": 0.5, "France": 0.4, "United Kingdom": 0.5, "India": 0.7, "Japan": 0.4,
+                "Finland": 0.25, "Italy": 0.4, "Sweden": 0.25, "Germany": 0.5, "Thailand": 0.4, "Vietnam": 0.8
+            };
             const customScale = zoomOverrides[name] || 0.06;
             
             const s = customScale / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
@@ -232,12 +247,21 @@
             hintPenaltyTriggered = true;
             hintToggleBtn.classList.add('hidden');
             choicesContainer.classList.remove('hidden');
-            let list = [currentCountryFeature.properties.name];
-            let altPool = quizCountryPool.filter(d => d.properties.name !== currentCountryFeature.properties.name);
-            while (list.length < 4) {
-                let rngName = altPool[Math.floor(Math.random() * altPool.length)].properties.name;
-                if (!list.includes(rngName)) list.push(rngName);
+            
+            const correctName = currentCountryFeature.properties.name;
+            const continent = getContinent(correctName);
+            let sameContinentPool = quizCountryPool.filter(d => 
+                getContinent(d.properties.name) === continent && 
+                d.properties.name !== correctName
+            );
+
+            let list = [correctName];
+            while (list.length < 4 && sameContinentPool.length > 0) {
+                let randomIndex = Math.floor(Math.random() * sameContinentPool.length);
+                let item = sameContinentPool.splice(randomIndex, 1)[0];
+                if (!list.includes(item.properties.name)) list.push(item.properties.name);
             }
+            
             list.sort(() => Math.random() - 0.5);
             choicesContainer.innerHTML = "";
             list.forEach(item => {
