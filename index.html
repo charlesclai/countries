@@ -223,7 +223,7 @@
                .data(geoWorldData)
                .enter().append("path")
                .attr("d", pathGenerator)
-               .attr("class", d => d.properties.name === currentCountryFeature.properties.name ? "country-feature country-target" : "country-feature");
+               .attr("class", d => d.id === currentCountryFeature.id ? "country-feature country-target" : "country-feature");
         }
 
         function evaluateResponse() {
