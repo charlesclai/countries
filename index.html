@@ -81,16 +81,16 @@
         const quizTargetsList = [
             "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas",
             "Bangladesh", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil",
-            "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China",
+            "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Central African Republic", "Chad", "Chile", "China",
             "Colombia", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominican Republic",
-            "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland",
+            "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Finland",
             "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Guinea", "Guyana", "Haiti",
             "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan",
             "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
             "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Mali", "Mauritania", "Mexico", "Moldova", "Mongolia",
             "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
             "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru",
-            "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saudi Arabia", "Senegal", "Serbia", "Sierra Leone",
+            "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Rwanda", "Saudi Arabia", "Senegal", "Serbia", "Sierra Leone",
             "Singapore", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan",
             "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Trinidad and Tobago",
             "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
@@ -204,9 +204,23 @@
             projection.scale(1).translate([0, 0]);
             const b = pathGenerator.bounds(currentCountryFeature);
             
-            // Adjusted scaleFactor to 0.06 to zoom out significantly
-            const scaleFactor = 0.06; 
-            const s = scaleFactor / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
+            const zoomOverrides = {
+                "Australia": 0.2,
+                "Kazakhstan": 0.5,
+                "Japan": 0.4,
+                "United Kingdom": 0.8,
+                "Italy": 0.9,
+                "India": 0.7,
+                "Iran": 0.9,
+                "Vietnam": 0.7,
+                "Mexico": 0.4,
+                "South Africa": 0.5
+            };
+            
+            const name = currentCountryFeature.properties.name;
+            const customScale = zoomOverrides[name] || 0.06;
+            
+            const s = customScale / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
             const t = [
                 (width - s * (b[1][0] + b[0][0])) / 2,
                 (height - s * (b[1][1] + b[0][1])) / 2
@@ -231,7 +245,8 @@
             feedbackDrawer.innerHTML = `<div class="py-2.5 px-4 rounded-xl font-bold inline-block mx-auto text-sm ${isCorrect ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-rose-100 text-rose-900 border border-rose-300'}">${correctName}</div>`;
             feedbackDrawer.classList.remove('hidden');
             inputCountry.disabled = true; hintToggleBtn.classList.add('hidden');
-            choicesContainer.classList.add('hidden'); submitBtn.classList.add('hidden');
+            choicesContainer.classList.add('hidden'); 
+            submitBtn.classList.add('hidden');
             nextBtn.classList.remove('hidden');
         }
 
