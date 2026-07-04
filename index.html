@@ -80,51 +80,76 @@
     <script>
         const quizTargetsList = [
             "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas",
-            "Bangladesh", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", 
-            "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Central African Republic", "Chad", "Chile",
-            "Colombia", "Congo", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo",
-            "Denmark", "Djibouti", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia",
+            "Bangladesh", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herz.", "Botswana", 
+            "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Central African Rep.", "Chad", "Chile",
+            "Colombia", "Congo", "Costa Rica", "Côte d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czechia", "Dem. Rep. Congo",
+            "Denmark", "Djibouti", "Dominican Rep.", "Ecuador", "Egypt", "El Salvador", "Eq. Guinea", "Eritrea", "Estonia",
             "Eswatini", "Ethiopia", "Finland", "French Guiana", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Guatemala",
             "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
             "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon",
-            "Lesotho", "Liberia", "Libya", "Libya", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Mali", "Mauritania",
+            "Lesotho", "Liberia", "Libya", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Mali", "Mauritania",
             "Mexico", "Moldova", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nepal", "Netherlands",
-            "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Panama",
+            "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Macedonia", "Norway", "Oman", "Pakistan", "Panama",
             "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Rwanda", "Saudi Arabia",
             "Senegal", "Serbia", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Somalia", "South Africa", "South Korea",
-            "South Sudan", "Spain", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+            "S. Sudan", "Spain", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
             "Tanzania", "Thailand", "Togo", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine",
-            "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen",
+            "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Yemen",
             "Zambia", "Zimbabwe"
         ];
 
         const continentMap = {
-            "Europe": ["Albania", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland", "Georgia", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Moldova", "Montenegro", "Netherlands", "North Macedonia", "Norway", "Poland", "Portugal", "Romania", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom"],
+            "Europe": ["Albania", "Austria", "Belarus", "Belgium", "Bosnia and Herz.", "Bulgaria", "Croatia", "Cyprus", "Czechia", "Denmark", "Estonia", "Finland", "Georgia", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Moldova", "Montenegro", "Netherlands", "Macedonia", "Norway", "Poland", "Portugal", "Romania", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom"],
             "Asia": ["Afghanistan", "Armenia", "Azerbaijan", "Bangladesh", "Bhutan", "Cambodia", "India", "Indonesia", "Iran", "Iraq", "Israel", "Japan", "Jordan", "Kazakhstan", "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Malaysia", "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "South Korea", "Sri Lanka", "Syria", "Taiwan", "Tajikistan", "Thailand", "Turkey", "Turkmenistan", "United Arab Emirates", "Uzbekistan", "Vietnam", "Yemen"],
-            "Africa": ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Central African Republic", "Chad", "Congo", "Cote d'Ivoire", "Democratic Republic of the Congo", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Senegal", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"],
-            "North America": ["Bahamas", "Belize", "Costa Rica", "Cuba", "Dominican Republic", "El Salvador", "Guatemala", "Haiti", "Honduras", "Jamaica", "Mexico", "Nicaragua", "Panama", "Trinidad and Tobago", "United States"],
+            "Africa": ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Central African Rep.", "Chad", "Congo", "Côte d'Ivoire", "Dem. Rep. Congo", "Djibouti", "Egypt", "Eq. Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Rwanda", "Senegal", "Sierra Leone", "Somalia", "South Africa", "S. Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"],
+            "North America": ["Bahamas", "Belize", "Costa Rica", "Cuba", "Dominican Rep.", "El Salvador", "Guatemala", "Haiti", "Honduras", "Jamaica", "Mexico", "Nicaragua", "Panama", "Trinidad and Tobago", "United States of America"],
             "South America": ["Argentina", "Bolivia", "Chile", "Colombia", "Ecuador", "French Guiana", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"],
             "Oceania": ["Australia", "New Zealand", "Papua New Guinea"]
         };
 
         const flagMap = {
             "Afghanistan": "🇦🇫", "Albania": "🇦🇱", "Algeria": "🇩🇿", "Angola": "🇦🇴", "Argentina": "🇦🇷", "Armenia": "🇦🇲", "Australia": "🇦🇺", "Austria": "🇦🇹", "Azerbaijan": "🇦🇿", "Bahamas": "🇧🇸",
-            "Bangladesh": "🇧🇩", "Belarus": "🇧🇾", "Belgium": "🇧🇪", "Belize": "🇧🇿", "Benin": "🇧🇯", "Bhutan": "🇧🇹", "Bolivia": "🇧🇴", "Bosnia and Herzegovina": "🇧🇦", "Botswana": "🇧🇼", 
-            "Bulgaria": "🇧🇬", "Burkina Faso": "🇧🇫", "Burundi": "🇧🇮", "Cambodia": "🇰🇭", "Cameroon": "🇨🇲", "Central African Republic": "🇨🇫", "Chad": "🇹🇩", "Chile": "🇨🇱",
-            "Colombia": "🇨🇴", "Congo": "🇨🇬", "Costa Rica": "🇨🇷", "Cote d'Ivoire": "🇨🇮", "Croatia": "🇭🇷", "Cuba": "🇨🇺", "Cyprus": "🇨🇾", "Czech Republic": "🇨🇿", "Democratic Republic of the Congo": "🇨🇩",
-            "Denmark": "🇩🇰", "Djibouti": "🇩🇯", "Dominican Republic": "🇩🇴", "Ecuador": "🇪🇨", "Egypt": "🇪🇬", "El Salvador": "🇸🇻", "Equatorial Guinea": "🇬🇶", "Eritrea": "🇪🇷", "Estonia": "🇪🇪",
+            "Bangladesh": "🇧🇩", "Belarus": "🇧🇾", "Belgium": "🇧🇪", "Belize": "🇧🇿", "Benin": "🇧🇯", "Bhutan": "🇧🇹", "Bolivia": "🇧🇴", "Bosnia and Herz.": "🇧🇦", "Botswana": "🇧🇼", 
+            "Bulgaria": "🇧🇬", "Burkina Faso": "🇧🇫", "Burundi": "🇧🇮", "Cambodia": "🇰🇭", "Cameroon": "🇨🇲", "Central African Rep.": "🇨🇫", "Chad": "🇹🇩", "Chile": "🇨🇱",
+            "Colombia": "🇨🇴", "Congo": "🇨🇬", "Costa Rica": "🇨🇷", "Côte d'Ivoire": "🇨🇮", "Croatia": "🇭🇷", "Cuba": "🇨🇺", "Cyprus": "🇨🇾", "Czechia": "🇨🇿", "Dem. Rep. Congo": "🇨🇩",
+            "Denmark": "🇩🇰", "Djibouti": "🇩🇯", "Dominican Rep.": "🇩🇴", "Ecuador": "🇪🇨", "Egypt": "🇪🇬", "El Salvador": "🇸🇻", "Eq. Guinea": "🇬🇶", "Eritrea": "🇪🇷", "Estonia": "🇪🇪",
             "Eswatini": "🇸🇿", "Ethiopia": "🇪🇹", "Finland": "🇫🇮", "French Guiana": "🇬🇫", "Gabon": "🇬🇦", "Gambia": "🇬🇲", "Georgia": "🇬🇪", "Germany": "🇩🇪", "Ghana": "🇬🇭", "Greece": "🇬🇷", "Guatemala": "🇬🇹",
             "Guinea": "🇬🇳", "Guyana": "🇬🇾", "Haiti": "🇭🇹", "Honduras": "🇭🇳", "Hungary": "🇭🇺", "Iceland": "🇮🇸", "India": "🇮🇳", "Indonesia": "🇮🇩", "Iran": "🇮🇷", "Iraq": "🇮🇶", "Ireland": "🇮🇪", "Israel": "🇮🇱",
             "Italy": "🇮🇹", "Jamaica": "🇯🇲", "Japan": "🇯🇵", "Jordan": "🇯🇴", "Kazakhstan": "🇰🇿", "Kenya": "🇰🇪", "Kuwait": "🇰🇼", "Kyrgyzstan": "🇰🇬", "Laos": "🇱🇦", "Latvia": "🇱🇻", "Lebanon": "🇱🇧",
             "Lesotho": "🇱🇸", "Liberia": "🇱🇷", "Libya": "🇱🇾", "Lithuania": "🇱🇹", "Luxembourg": "🇱🇺", "Madagascar": "🇲🇬", "Malawi": "🇲🇼", "Malaysia": "🇲🇾", "Mali": "🇲🇱", "Mauritania": "🇲🇷",
             "Mexico": "🇲🇽", "Moldova": "🇲🇩", "Mongolia": "🇲🇳", "Montenegro": "🇲🇪", "Morocco": "🇲🇦", "Mozambique": "🇲🇿", "Myanmar": "🇲🇲", "Namibia": "🇳🇦", "Nepal": "🇳🇵", "Netherlands": "🇳🇱",
-            "New Zealand": "🇳🇿", "Nicaragua": "🇳🇮", "Niger": "🇳🇪", "Nigeria": "🇳🇬", "North Korea": "🇰🇵", "North Macedonia": "🇲🇰", "Norway": "🇳🇴", "Oman": "🇴🇲", "Pakistan": "🇵🇰", "Panama": "🇵🇦",
+            "New Zealand": "🇳🇿", "Nicaragua": "🇳🇮", "Niger": "🇳🇪", "Nigeria": "🇳🇬", "North Korea": "🇰🇵", "Macedonia": "🇲🇰", "Norway": "🇳🇴", "Oman": "🇴🇲", "Pakistan": "🇵🇰", "Panama": "🇵🇦",
             "Papua New Guinea": "🇵🇬", "Paraguay": "🇵🇾", "Peru": "🇵🇪", "Philippines": "🇵🇭", "Poland": "🇵🇱", "Portugal": "🇵🇹", "Qatar": "🇶🇦", "Romania": "🇷🇴", "Rwanda": "🇷🇼", "Saudi Arabia": "🇸🇦",
             "Senegal": "🇸🇳", "Serbia": "🇷🇸", "Sierra Leone": "🇸🇱", "Singapore": "🇸🇬", "Slovakia": "🇸🇰", "Slovenia": "🇸🇮", "Somalia": "🇸🇴", "South Africa": "🇿🇦", "South Korea": "🇰🇷",
-            "South Sudan": "🇸🇸", "Spain": "🇪🇸", "Sri Lanka": "🇱🇰", "Sudan": "🇸🇩", "Suriname": "🇸🇷", "Sweden": "🇸🇪", "Switzerland": "🇨🇭", "Syria": "🇸🇾", "Taiwan": "🇹🇼", "Tajikistan": "🇹🇯",
+            "S. Sudan": "🇸🇸", "Spain": "🇪🇸", "Sri Lanka": "🇱🇰", "Sudan": "🇸🇩", "Suriname": "🇸🇷", "Sweden": "🇸🇪", "Switzerland": "🇨🇭", "Syria": "🇸🇾", "Taiwan": "🇹🇼", "Tajikistan": "🇹🇯",
             "Tanzania": "🇹🇿", "Thailand": "🇹🇭", "Togo": "🇹🇬", "Trinidad and Tobago": "🇹🇹", "Tunisia": "🇹🇳", "Turkey": "🇹🇷", "Turkmenistan": "🇹🇲", "Uganda": "🇺🇬", "Ukraine": "🇺🇦", "United Arab Emirates": "🇦🇪",
-            "United Kingdom": "🇬🇧", "United States": "🇺🇸", "Uruguay": "🇺🇾", "Uzbekistan": "🇺🇿", "Venezuela": "🇻🇪", "Vietnam": "🇻🇳", "Yemen": "🇾🇪",
+            "United Kingdom": "🇬🇧", "United States of America": "🇺🇸", "Uruguay": "🇺🇾", "Uzbekistan": "🇺🇿", "Venezuela": "🇻🇪", "Vietnam": "🇻🇳", "Yemen": "🇾🇪",
             "Zambia": "🇿🇲", "Zimbabwe": "🇿🇼"
+        };
+
+        const nameMapping = {
+            "czechia": "Czechia",
+            "czechrepublic": "Czechia",
+            "macedonia": "Macedonia",
+            "northmacedonia": "Macedonia",
+            "bosniaandherzegovina": "Bosnia and Herz.",
+            "bosniaandherz": "Bosnia and Herz.",
+            "centralafricanrepublic": "Central African Rep.",
+            "centralafricanrep": "Central African Rep.",
+            "cotedivoire": "Côte d'Ivoire",
+            "ivorycoast": "Côte d'Ivoire",
+            "democraticrepublicofthecongo": "Dem. Rep. Congo",
+            "drcongo": "Dem. Rep. Congo",
+            "congo": "Congo",
+            "dominicanrepublic": "Dominican Rep.",
+            "dominicanrep": "Dominican Rep.",
+            "equatorialguinea": "Eq. Guinea",
+            "eqguinea": "Eq. Guinea",
+            "southsudan": "S. Sudan",
+            "ssudan": "S. Sudan",
+            "unitedstates": "United States of America",
+            "unitedstatesofamerica": "United States of America",
+            "usa": "United States of America"
         };
 
         let geoWorldData = [];          
@@ -209,10 +234,10 @@
             
             const zoomOverrides = { 
                 "Norway": 0.3, "Indonesia": 0.2, "Kazakhstan": 0.15, "Iran": 0.2, "Peru": 0.2, 
-                "Venezuela": 0.2, "Sudan": 0.2, "Spain": 0.3, "Portugal": 0.25, "Mauritania": 0.2, 
-                "Pakistan": 0.2, "Morocco": 0.2, "Libya": 0.2, "Chad": 0.2, "Oman": 0.2, "Greece": 0.3, "Mexico": 0.2, "Tanzania": 0.2, "Croatia": 0.4, "Madagascar": 0.2, "Malawi": 0.2, "Malaysia": 0.3, "Namibia": 0.25, "Australia": 0.25, "Cameroon": 0.3, "Philippines": 0.4, "South Africa": 0.3, "Chile": 0.5, "Argentina": 0.5, "United Kingdom": 0.35, 
+                "Venezuela": 0.2, "Sudan": 0.2, "Spain": 0.15, "Portugal": 0.15, "Mauritania": 0.2, 
+                "Pakistan": 0.2, "Morocco": 0.2, "Libya": 0.2, "Chad": 0.2, "Oman": 0.2, "Greece": 0.3, "Mexico": 0.2, "Tanzania": 0.2, "Croatia": 0.4, "Madagascar": 0.2, "Malawi": 0.1, "Malaysia": 0.3, "Namibia": 0.25, "Australia": 0.25, "Cameroon": 0.15, "Philippines": 0.4, "South Africa": 0.3, "Chile": 0.5, "Argentina": 0.5, "United Kingdom": 0.2, 
                 "India": 0.7, "Japan": 0.4, "Finland": 0.25, "Italy": 0.4, "Sweden": 0.25, 
-                "Germany": 0.5, "Thailand": 0.4, "Vietnam": 0.8, "Myanmar": 0.4, "Bahamas": 0.2, "Uzbekistan": 0.4, "Niger": 0.25, "Trinidad and Tobago": 0.03, "Yemen": 0.3, "Poland": 0.4, "Zambia": 0.3, "Ethiopia": 0.3, "Afghanistan": 0.3, "Somalia": 0.3, "Botswana": 0.3, "Mongolia": 0.25, "Angola": 0.25, "Iraq": 0.3, "Ukraine": 0.3, "Colombia": 0.4, "Algeria": 0.3, "Saudi Arabia": 0.6, "Mali": 0.35
+                "Germany": 0.5, "Thailand": 0.4, "Vietnam": 0.4, "Myanmar": 0.4, "Bahamas": 0.2, "Uzbekistan": 0.4, "Niger": 0.25, "Trinidad and Tobago": 0.03, "Yemen": 0.3, "Poland": 0.4, "Zambia": 0.15, "Ethiopia": 0.3, "Afghanistan": 0.3, "Somalia": 0.3, "Botswana": 0.3, "Mongolia": 0.25, "Angola": 0.25, "Iraq": 0.3, "Ukraine": 0.15, "Colombia": 0.4, "Algeria": 0.3, "Saudi Arabia": 0.6, "Mali": 0.35, "United States of America": 0.2, "Mozambique": 0.3
             };
             const customScale = zoomOverrides[name] || 0.06;
             
@@ -233,7 +258,7 @@
             const correctName = currentCountryFeature.properties.name;
             const targetAns = correctName.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
             
-            let isCorrect = (userAns === targetAns);
+            let isCorrect = (userAns === targetAns) || (nameMapping[userAns] === correctName);
             currentStreak = isCorrect ? (hintPenaltyTriggered ? Math.floor(currentStreak / 2) + 1 : currentStreak + 1) : 0;
             streakCounter.innerText = `STREAK: ${currentStreak}`;
             
